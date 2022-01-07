@@ -1,5 +1,8 @@
+package com.velo.zuulgatewayservice;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -87,9 +90,9 @@ public class ZuulConfiguration {
                 Enhancer enhancer = new Enhancer();
                 enhancer.setSuperclass(ZuulHandlerMapping.class);
                 enhancer.setCallbackFilter(LookupHandlerCallbackFilter.INSTANCE); // only for lookupHandler
-                enhancer.setCallbacks(new Callback[] {LookupHandlerMethodInterceptor.INSTANCE, NoOp.INSTANCE});
+                enhancer.setCallbacks(new Callback[]{LookupHandlerMethodInterceptor.INSTANCE, NoOp.INSTANCE});
                 Constructor<?> ctor = ZuulHandlerMapping.class.getConstructors()[0];
-                return enhancer.create(ctor.getParameterTypes(), new Object[] {routeLocator, zuulController});
+                return enhancer.create(ctor.getParameterTypes(), new Object[]{routeLocator, zuulController});
             }
             return bean;
         }
